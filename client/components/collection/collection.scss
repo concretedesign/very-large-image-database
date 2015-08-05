@@ -1,0 +1,89 @@
+@import "bourbon/bourbon";
+@import "neat/neat";
+
+.collection-count-closed, .collection-bg, .collection {
+  @include transition(opacity 250ms ease-in);
+}
+.collection-container.open {
+  .collection-count-closed {
+    opacity: 0;
+  }
+  .collection-bg, .collection {
+    opacity: 1;
+    width: 300px;
+  }
+}
+
+.collection-count-closed {
+  position: fixed;
+  z-index: 1;
+  top: 20px; right: 20px;
+  width: 40px; height: 40px;
+  display: inline-block;
+  background-color: red;
+  border-radius: 50%;
+  cursor: pointer;
+
+  .icon {
+    color: white;
+  }
+}
+.collection-bg {
+  opacity: 0;
+  position: fixed;
+  top: 0; right: 0;
+  height: 100%; width: 0;
+  background-color: rgba(red, 0.9);
+}
+.collection {
+  opacity: 0;
+  position: fixed;
+  overflow: auto;
+  top: 0; right: 0;
+  height: 100%; width: 0;
+}
+
+.collection .no-images {
+  text-align: center;
+}
+
+.collection .actions {
+  text-align: right;
+  padding: 20px;
+}
+.collection .actions > span {
+  display: inline-block;
+  background-color: white;
+  border-radius: 50%;
+  border: 1px solid #333;
+  width: 20px; height: 20px;
+  margin-left: 12px;
+  cursor: pointer;
+  position: relative;
+
+  &.collection-clear, &.collection-download {
+    @include transform(translateY(-10px));
+  }
+  &.collection-count {
+    width: 40px; height: 40px;
+  }
+}
+
+.collection-count-closed .icon, .collection .actions span .icon {
+  font-size: 12px;
+  position: absolute;
+  top: 50%; left: 50%;
+  @include transform(translate(-50%, -50%));
+}
+
+.collection .collection-images .image {
+  width: 280px;
+  height: 280px;
+
+  .image-info-bg {
+    background-color: rgba(white, 0.9);
+  }
+  .actions {
+    text-align: center;
+  }
+}

@@ -1,0 +1,27 @@
+<template name="collection">
+  <div class="collection-container {{collectionOpen}}">
+    <div class="collection-count-closed"><span class="icon">{{collectionCount}}</span></div>
+    <div class="collection-bg"></div>
+    <div class="collection">
+      <div class="actions">
+        <span class="collection-clear"><span class="icon">✕</span></span>
+        <span class="collection-download"><span class="icon">↓</span></span>
+        <span class="collection-count"><span class="icon">{{collectionCount}}</span></span>
+      </div>
+      <div class="collection-images">
+        {{#each collection}}
+          <div class="image" style="background-image: url(pics/{{this}});">
+            <div class="image-info-bg"></div>
+            <div class="image-info">
+              <div class="actions">
+                <button class="remove-image">Remove</button>
+              </div>
+            </div>
+          </div>
+        {{else}}
+          <h1 class="no-images">No Images In Collection</h1>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+</template>
