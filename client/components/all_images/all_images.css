@@ -1,0 +1,10 @@
+@import "bourbon/bourbon";
+@import "neat/neat";
+
+.image-info {
+  display: none;
+}
+
+.main-image {
+  max-width: 600px;
+}

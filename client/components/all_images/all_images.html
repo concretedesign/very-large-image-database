@@ -1,0 +1,14 @@
+<template name="all_images">
+  {{#each images}}
+    <div class="image">
+      <div class="image-info">
+        <div class="image-tags">
+          {{#each categories}}
+            <span>category: {{this}}</span>
+          {{/each}}
+        </div>
+      </div>
+      <img class="main-image" src="pics/{{path}}" />
+    </div>
+  {{/each}}
+</template>
