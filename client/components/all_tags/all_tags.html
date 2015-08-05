@@ -1,7 +1,13 @@
 <template name="all_tags">
-  <div class="tags">
-    {{#each tags}}
-      <span class="tag">{{this}}</span>
-    {{/each}}
+  <div class="tag-container">
+    <ul class="selected-tags">
+      <li><span>foo</span></li>
+      <li><span>bar</span></li>
+    </ul>
+    <ul class="tags">
+      {{#each tags}}
+        <li class="tag">{{this}}</li>
+      {{/each}}
+    </ul>
   </div>
 </template>

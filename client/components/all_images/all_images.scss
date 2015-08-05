@@ -1,0 +1,65 @@
+@import "bourbon/bourbon";
+@import "neat/neat";
+
+.image {
+  display: inline-block;
+  width: 300px;
+  height: 300px;
+  background-size: cover;
+  margin: 10px;
+  position: relative;
+}
+
+.image-info-bg {
+  opacity: 0;
+  background-color: rgba(red, 0.8);
+  position: absolute;
+  height: 100%; width: 100%;
+  top: 0; left: 0;
+  @include transition(opacity 300ms ease-in);
+}
+
+.image-info {
+  opacity: 0;
+  position: absolute;
+  width: 100%;
+  top: 50%; left: 0;
+  color: white;
+  text-align: center;
+  @include transform(translateY(-50%));
+  @include transition(opacity 300ms ease-in);
+
+  .image-tags {
+    text-transform: uppercase;
+    font-size: 10px;
+
+    span {
+      padding-right: 5px;
+      border-right: 1px solid white;
+      margin-right: 5px;
+
+      &:last-of-type {
+        border-right: 0;
+        margin-right: 0;
+        padding-right: 0;
+      }
+    }
+  }
+
+  .actions {
+    margin-top: 20px;
+
+    button {
+      background-color: #333;
+      margin: 0 10px;
+    }
+  }
+}
+
+.image:hover .image-info, .image:hover .image-info-bg {
+  opacity: 1;
+}
+
+.main-image {
+  max-width: 600px;
+}
