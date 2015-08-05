@@ -60,6 +60,13 @@
   opacity: 1;
 }
 
+.no-images {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  @include transform(translate(-50%, -50%));
+}
+
 .main-image {
   max-width: 600px;
 }

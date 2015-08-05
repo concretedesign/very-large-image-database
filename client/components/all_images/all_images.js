@@ -2,7 +2,13 @@ Meteor.subscribe('images');
 
 Template.all_images.helpers({
   images: function () {
-    return Images.find();
+    var activeTags = Session.get('activeTags') ? Session.get('activeTags').split(',') : [];
+
+    if (activeTags.length) {
+      return Images.find({ categories: { $all: activeTags } })
+    } else {
+      return Images.find();
+    }
   }
 });
 
