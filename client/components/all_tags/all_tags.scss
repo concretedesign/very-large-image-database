@@ -12,8 +12,10 @@
 }
 
 .selected-tags li {
+  cursor: pointer;
   display: inline-block;
   height: 100vh;
+  width: 28px;
   margin-right: 1px;
   background-color: red;
 }
@@ -22,8 +24,9 @@
   font-size: 16px;
   color: white;
   display: inline-block;
-  margin-top: 29px;
+  margin: 29px 0 0 27px;
   text-transform: uppercase;
+  transform-origin: left top 0;
   @include transform(rotate(90deg));
 }
 
@@ -33,5 +36,10 @@
 }
 
 .tags li {
+  cursor: pointer;
   text-transform: uppercase;
+
+  &.selected {
+    display: none;
+  }
 }

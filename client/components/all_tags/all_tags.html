@@ -1,12 +1,13 @@
 <template name="all_tags">
   <div class="tag-container">
     <ul class="selected-tags">
-      <li><span>foo</span></li>
-      <li><span>bar</span></li>
+      {{#each selectedTags}}
+        <li><span>{{this}}</span></li>
+      {{/each}}
     </ul>
     <ul class="tags">
       {{#each tags}}
-        <li class="tag">{{this}}</li>
+        <li class="tag {{tagVisible}}">{{this}}</li>
       {{/each}}
     </ul>
   </div>
