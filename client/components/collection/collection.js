@@ -28,25 +28,6 @@ Template.collection.events({
     }
 
     downloadAllImages(currentCollection);
-
-    // // Create zip
-    // var zip = new ZipZap();
-    //
-    //
-    // var deferreds = [];
-    // for(var i=0; i<imgLinks.length; i++){
-    //   deferreds.push( addToZip(zip, imgLinks[i], i) );
-    // }
-    // $.when.apply(window, deferreds).done(generateZip);
-    //
-    // // Add a file to the zip
-    // currentCollection.forEach(function (path) {
-    //   zip.file('/pics/' + path.split('/')[path.length - 1], path);
-    // })
-    //
-    // zip.saveAs("NAMEMEBETTER.zip", function () {
-    //   delete zip;
-    // });
   },
   'click .remove-image': function (e) {
     var currentCollection = Session.get('collection') ? Session.get('collection').split(',') : [];
@@ -56,7 +37,7 @@ Template.collection.events({
 });
 
 
-function downloadAllImages(imgLinks){
+function downloadAllImages (imgLinks) {
   var zip = new JSZip();
   var deferreds = [];
   for(var i = 0; i < imgLinks.length; i++) {
@@ -65,16 +46,16 @@ function downloadAllImages(imgLinks){
   $.when.apply(window, deferreds).done(generateZip);
 }
 
-function generateZip(zip){
+function generateZip (zip) {
   var content = zip.generate({type:"blob"});
   var d = new Date()
 	var timestamp = d.getUTCFullYear()+'-'+(d.getMonth() + 1)+'-'+d.getDate()+'_'+d.getHours()+'-'+d.getMinutes()
   saveAs(content, 'concrete-images-' + timestamp + '.zip');
 }
 
-function addToZip(zip, imgLink, i) {
+function addToZip (zip, imgLink, i) {
   var deferred = $.Deferred();
-  JSZipUtils.getBinaryContent('/pics/' + imgLink, function (err, data) {
+  JSZipUtils.getBinaryContent('/imagebank/' + imgLink, function (err, data) {
     if(err) {
       alert("Problem happened when download img: " + imgLink);
       console.log("Problem happened when download img: " + imgLink);

@@ -6,13 +6,14 @@ Meteor.publish('images', function () {
 })
 
 Meteor.startup(function () {
-  var watcher = chokidar.watch('/Users/matt/Desktop/pics/', {
+  var watcher = chokidar.watch(Meteor.settings.public.imgdir, {
     ignored: /[\/\\]\./,
     persistent: true
   });
 
   watcher
     .on('add', Meteor.bindEnvironment(function (path) {
+      console.log('adding ' + path)
       var exploded = path.split('/');
       var imagePath = exploded.slice(subdirectories, exploded.length).join('/');
       var categories = exploded.slice(subdirectories, exploded.length - 1);
@@ -41,23 +42,3 @@ Meteor.startup(function () {
       Images.remove(image._id);
     }));
 });
-
-Meteor.methods({
-  // Create a zip archive given an array of file paths
-  createArchive: function (files) {
-    console.log(files);
-    // Create zip
-    var zip = new JSZip();
-
-    // Add a file to the zip
-    files.forEach(function (path) {
-      zip.file(path.split('/')[path.length - 1], path);
-    })
-
-    // Generate zip stream
-    return zip.generate({
-      type:        "nodebuffer",
-      compression: "DEFLATE"
-    });
-  }
-})
