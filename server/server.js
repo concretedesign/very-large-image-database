@@ -39,3 +39,23 @@ Meteor.startup(function () {
       Images.remove(image._id);
     }));
 });
+
+Meteor.methods({
+  // Create a zip archive given an array of file paths
+  createArchive: function (files) {
+    console.log(files);
+    // Create zip
+    var zip = new JSZip();
+
+    // Add a file to the zip
+    files.forEach(function (path) {
+      zip.file(path.split('/')[path.length - 1], path);
+    })
+
+    // Generate zip stream
+    return zip.generate({
+      type:        "nodebuffer",
+      compression: "DEFLATE"
+    });
+  }
+})

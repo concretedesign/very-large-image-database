@@ -17,11 +17,36 @@ Template.collection.events({
   'click .collection-count': function () {
     Session.set('collectionOpen', !Session.get('collectionOpen'));
   },
-  'click .clear-collection': function (e) {
+  'click .collection-clear': function (e) {
     Session.set('collection', '');
   },
-  'click .download-collection': function (e) {
-    // FIXME: This probably needs to be a server method
+  'click .collection-download': function (e) {
+    var currentCollection = Session.get('collection') ? Session.get('collection').split(',') : []
+
+    if (!currentCollection.length) {
+      return false;
+    }
+
+    downloadAllImages(currentCollection);
+
+    // // Create zip
+    // var zip = new ZipZap();
+    //
+    //
+    // var deferreds = [];
+    // for(var i=0; i<imgLinks.length; i++){
+    //   deferreds.push( addToZip(zip, imgLinks[i], i) );
+    // }
+    // $.when.apply(window, deferreds).done(generateZip);
+    //
+    // // Add a file to the zip
+    // currentCollection.forEach(function (path) {
+    //   zip.file('/pics/' + path.split('/')[path.length - 1], path);
+    // })
+    //
+    // zip.saveAs("NAMEMEBETTER.zip", function () {
+    //   delete zip;
+    // });
   },
   'click .remove-image': function (e) {
     var currentCollection = Session.get('collection') ? Session.get('collection').split(',') : [];
@@ -29,3 +54,37 @@ Template.collection.events({
     Session.set('collection', newCollection.join(','));
   }
 });
+
+
+function downloadAllImages(imgLinks){
+  var zip = new JSZip();
+  var deferreds = [];
+  for(var i = 0; i < imgLinks.length; i++) {
+    deferreds.push(addToZip(zip, imgLinks[i], i));
+  }
+  $.when.apply(window, deferreds).done(generateZip);
+}
+
+function generateZip(zip){
+  var content = zip.generate({type:"blob"});
+  var d = new Date()
+	var timestamp = d.getUTCFullYear()+'-'+(d.getMonth() + 1)+'-'+d.getDate()+'_'+d.getHours()+'-'+d.getMinutes()
+  saveAs(content, 'concrete-images-' + timestamp + '.zip');
+}
+
+function addToZip(zip, imgLink, i) {
+  var deferred = $.Deferred();
+  JSZipUtils.getBinaryContent('/pics/' + imgLink, function (err, data) {
+    if(err) {
+      alert("Problem happened when download img: " + imgLink);
+      console.log("Problem happened when download img: " + imgLink);
+      deferred.resolve(zip); // ignore this error: just logging
+      // deferred.reject(zip); // or we may fail the download
+    } else {
+      var paths = imgLink.split('/');
+      zip.file(paths[paths.length - 1], data, {binary:true});
+      deferred.resolve(zip);
+    }
+  });
+  return deferred;
+}
