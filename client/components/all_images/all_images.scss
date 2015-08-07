@@ -1,6 +1,9 @@
 @import "bourbon/bourbon";
 @import "neat/neat";
 
+.all-images {
+  margin-left: 200px;
+}
 .image {
   display: inline-block;
   width: 300px;
@@ -69,4 +72,20 @@
 
 .main-image {
   max-width: 600px;
+}
+
+.pager {
+  button {
+    height: 100px;
+    margin: 50px;
+    width: 250px;
+    background-color: #333;
+  }
+  .back-button {
+    float: left;
+    margin-left: 0;
+  }
+  .next-button {
+    float: right;
+  }
 }

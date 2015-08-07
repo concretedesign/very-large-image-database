@@ -23,6 +23,7 @@ Template.all_tags.events({
     var currentTags = Session.get('activeTags') ? Session.get('activeTags').split(',') : [];
     var newTags = _.without(currentTags, this.valueOf());
     Session.set('activeTags', newTags.join(','));
+    Session.set('imageSkip', 0);
   },
   'click .tags li': function (e) {
     var currentTags = Session.get('activeTags') ? Session.get('activeTags').split(',') : [];
@@ -30,5 +31,6 @@ Template.all_tags.events({
       currentTags.push(this.valueOf());
     }
     Session.set('activeTags', currentTags.join(','));
+    Session.set('imageSkip', 0);
   }
 });

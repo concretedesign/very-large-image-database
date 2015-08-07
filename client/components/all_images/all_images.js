@@ -1,14 +1,31 @@
 Meteor.subscribe('images');
+const imageLimit = 60;
 
 Template.all_images.helpers({
   images: function () {
     var activeTags = Session.get('activeTags') ? Session.get('activeTags').split(',') : [];
+    var imageSkip = Session.get('imageSkip') ? Session.get('imageSkip') : 0;
 
     if (activeTags.length) {
-      return Images.find({ categories: { $all: activeTags } })
+      return Images.find({ categories: { $all: activeTags } }, { skip: imageSkip * imageLimit, limit: imageLimit })
     } else {
-      return Images.find();
+      return Images.find({}, { skip: imageSkip * imageLimit, limit: imageLimit });
     }
+  },
+  isPastFirstPage: function () {
+    return Session.get('imageSkip') > 0;
+  },
+  hasNextPage: function () {
+    var activeTags = Session.get('activeTags') ? Session.get('activeTags').split(',') : [];
+
+    var count = 0;
+    if (activeTags.length) {
+      count = Images.find({ categories: { $all: activeTags } }).count();
+    } else {
+      count = Images.find().count();
+    }
+
+    return Session.get('imageSkip') < count;
   }
 });
 
@@ -23,17 +40,21 @@ Template.all_images.events({
       currentCollection.push(this.path);
     }
     Session.set('collection', currentCollection.join(','));
+  },
+  'click .back-button': function (e) {
+    var currentPage = Session.get('imageSkip');
+    Session.set('imageSkip', Math.max(0, currentPage - 1));
+
+    $('html, body').animate({
+      scrollTop: "0px"
+    }, 300);
+  },
+  'click .next-button': function (e) {
+    var currentPage = Session.get('imageSkip');
+    Session.set('imageSkip', currentPage + 1);
+
+    $('html, body').animate({
+      scrollTop: "0px"
+    }, 300);
   }
 });
-
-
-Template.all_images.onRendered(function () {
-  // var grid = document.querySelector('.all-images');
-  // var iso = new Isotope( grid, {
-  //   // options...
-  //   itemSelector: '.image',
-  //   masonry: {
-  //     columnWidth: 200
-  //   }
-  // });
-})
