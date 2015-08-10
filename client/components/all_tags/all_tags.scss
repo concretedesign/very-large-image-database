@@ -2,8 +2,10 @@
 @import "neat/neat";
 
 .tag-container {
-  float: left;
-  height: 100vh;
+  position: fixed;
+  width: 250px;
+  overflow-x: scroll;
+  height: 100%;
 }
 
 .selected-tags {
@@ -31,8 +33,8 @@
 }
 
 .tags {
-  float: left;
   padding: 20px;
+  overflow-y: auto;
 }
 
 .tags li {
