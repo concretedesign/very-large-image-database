@@ -1,5 +1,11 @@
 Meteor.subscribe('images');
+
+// How many images we show on one page
 const imageLimit = 60;
+
+UI.registerHelper('escapePath', function(path) {
+  return encodeURIComponent(path);
+});
 
 Template.all_images.helpers({
   images: function () {
