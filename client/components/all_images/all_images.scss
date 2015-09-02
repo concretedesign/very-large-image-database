@@ -3,6 +3,10 @@
 
 .all-images {
   margin-left: 250px;
+
+  @include media(new-breakpoint(max-width 800px)) {
+    margin-left: 0;
+  }
 }
 .image {
   display: inline-block;
@@ -11,6 +15,15 @@
   padding-bottom: 24%;
   background-size: cover;
   position: relative;
+
+  @include media(new-breakpoint(max-width 1200px)) {
+    width: 32%;
+    padding-bottom: 32%;
+  }
+  @include media(new-breakpoint(max-width 800px)) {
+    width: 49%;
+    padding-bottom: 49%;
+  }
 }
 
 .image-info-bg {
